@@ -1,27 +1,24 @@
 package com.example.swapispringbootlab.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import com.example.swapispringbootlab.model.BaseModel;
+import com.example.swapispringbootlab.model.PeopleModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.swapispringbootlab.client.interfaces.IStarWarsGateway;
-import com.example.swapispringbootlab.model.PeopleModel;
 
 @RestController
 @RequestMapping("api/people")
+@RequiredArgsConstructor
 public class PeopleController {
 
-	@Autowired
-	IStarWarsGateway starWarsGateway;
+	private final IStarWarsGateway starWarsGateway;
 
 	@GetMapping
-	public ResponseEntity<List<PeopleModel>> findAll() {
-		List<PeopleModel> peoples = this.starWarsGateway.findAllPeople();
-		return ResponseEntity.ok().body(peoples);
+	public BaseModel<PeopleModel> findAll() {
+		return this.starWarsGateway.findAllPeople();
 	}
 
 }
